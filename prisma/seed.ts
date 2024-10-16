@@ -7,8 +7,9 @@ const seedData = async () => {
   const newUser = await prisma.user.create({
     data: {
       name: "김기원",
-      email: "test1@example.com",
-      password: "1234",
+      authType: "self",
+      email: "test@test.com",
+      password: "rlarldnjs!12",
     },
   });
   console.log(newUser);
