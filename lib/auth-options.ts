@@ -72,8 +72,19 @@ export const authOptions: AuthOptions = {
         id: token.sub,
       },
     }),
-    jwt: async ({ user, token }) => {
-      if (user) {
+    // jwt: async ({ user, token }) => {
+    //   if (user) {
+    //     token.sub = user.id;
+    //   }
+    //   return token;
+    // },
+    jwt: async ({ user, token, account }) => {
+      if (user && account) {
+        await prisma.user.update({
+          where: { id: parseInt(user.id) },
+          data: { authType: account.provider },
+        });
+
         token.sub = user.id;
       }
       return token;
