@@ -4,7 +4,7 @@ import prisma from "../../../../db";
 interface RequestBody {
   name: string;
   email: string;
-  authType: string;
+  image?: string;
   password: string;
 }
 
@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   const user = await prisma.user.create({
     data: {
       name: body.name,
-      authType: body.authType,
+      image: body.image,
       email: body.email,
       password: await bcrypt.hash(body.password, 10),
     },
