@@ -1,47 +1,33 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export const Posts = () => {
-  const router = useRouter();
-  const { data: session, status } = useSession();
-
-  useEffect(() => {
-    if (status !== "authenticated") {
-      router.replace("/users/login");
-    }
-  }, [status]);
-
-  if (status === "authenticated") {
-    return (
-      <div className="py-4 md:p-4 columns-1 md:columns-2 gap-4 lg:columns-3">
-        {cards.map(card => (
-          <div
-            key={card.id}
-            className="mb-4 break-inside-avoid-column relative overflow-hidden shadow-lg sm:h-auto h-auto max-h-[350px] sm:max-h-none flex items-center justify-center" // Add flex properties here
-          >
-            <Image
-              src={card.src}
-              alt={card.alt}
-              width={300} // 기본적으로 설정할 너비
-              height={300} // 기본 높이
-              fill={false}
-              priority
-              style={{ objectFit: "cover" }}
-              className="w-full h-full object-cover" // sm:h-[350px]
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex justify-between text-white">
-              <button className="text-sm">❤️ {card.id}</button>
-              <button className="text-sm">💬 Comment</button>
-            </div>
+  return (
+    <div className="py-4 md:p-4 columns-1 md:columns-2 gap-4 lg:columns-3">
+      {cards.map(card => (
+        <div
+          key={card.id}
+          className="mb-4 break-inside-avoid-column relative overflow-hidden shadow-lg sm:h-auto h-auto max-h-[350px] sm:max-h-none flex items-center justify-center" // Add flex properties here
+        >
+          <Image
+            src={card.src}
+            alt={card.alt}
+            width={300} // 기본적으로 설정할 너비
+            height={300} // 기본 높이
+            fill={false}
+            priority
+            style={{ objectFit: "cover" }}
+            className="w-full h-full object-cover" // sm:h-[350px]
+          />
+          <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-2 flex justify-between text-white">
+            <button className="text-sm">❤️ {card.id}</button>
+            <button className="text-sm">💬 Comment</button>
           </div>
-        ))}
-      </div>
-    );
-  }
+        </div>
+      ))}
+    </div>
+  );
 };
 export const cards = [
   {

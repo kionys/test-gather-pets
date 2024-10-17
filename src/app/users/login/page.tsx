@@ -1,7 +1,7 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useState } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
@@ -11,10 +11,9 @@ import { SiNaver } from "react-icons/si";
  * @author 김기원
  */
 const LoginPage = () => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { status } = useSession();
+  // const { status } = useSession();
 
   // 로그인
   const signInUser = async () => {
@@ -33,23 +32,26 @@ const LoginPage = () => {
     }
 
     // 유효성 검사를 통과한 경우 로그인 시도
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       email: email,
       password: password,
-      // redirect: true,
-      // callbackUrl: "/",
+      redirect: true,
+      callbackUrl: "/",
     })
       .then(() => {
         console.log("로그인이 완료되었습니다.");
       })
       .catch(err => {
         console.error("로그인 실패:", err);
+        // if()
+        window.alert(err.status);
       });
+    console.log(result);
   };
 
-  useEffect(() => {
-    status === "authenticated" && router.replace("/");
-  }, [router, status]);
+  // useEffect(() => {
+  //   status === "authenticated" && router.replace("/");
+  // }, [router, status]);
 
   return (
     <div className="flex flex-col justify-center px-6 lg:px-8 h-[100vh]">
@@ -73,16 +75,18 @@ const LoginPage = () => {
         />
         <button
           onClick={signInUser}
-          className="text-white flex gap-2 bg-[#cdcdcd] hover:bg-[#cdcdcd]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
+          className="text-white flex gap-2 bg-[#cdcdcd] hover:bg-[#cdcdcd]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center disabled:opacity-30"
+          disabled={!email || !password}
         >
           로그인
         </button>
-        <button
-          onClick={() => router.push("/users/register")}
+        <Link
+          href="/users/register"
+          scroll={false}
           className="text-white flex gap-2 bg-[#828282] hover:bg-[#828282]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center"
         >
           회원가입
-        </button>
+        </Link>
       </div>
       <div className="mt-10 mx-auto w-full max-w-sm">
         <div className="flex flex-col gap-3">

@@ -3,7 +3,7 @@
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useRef, useState } from "react";
+import { useState } from "react";
 /**
  *
  * @returns 회원가입 페이지
@@ -13,9 +13,9 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  // const [image, setImage] = useState<string | ArrayBuffer | null>(null);
 
-  const imgRef = useRef<HTMLInputElement | null>(null);
+  // const imgRef = useRef<HTMLInputElement | null>(null);
 
   // 회원가입
   const signUpUser = async () => {
@@ -38,7 +38,7 @@ const RegisterPage = () => {
       const userData = {
         name,
         email,
-        image,
+        // image,
         password,
       };
 
@@ -56,51 +56,51 @@ const RegisterPage = () => {
   };
 
   // 썸네일 이미지
-  const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const imageData = e.currentTarget.files;
-    const fileReader = new FileReader();
+  // const onChangeImage = async (e: ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   const imageData = e.currentTarget.files;
+  //   const fileReader = new FileReader();
 
-    if (imageData && imageData[0]) {
-      if (imageData[0].size > 1.5 * 1024 * 1024) {
-        //base64 encoding 시 사이즈 33% 증가로 인함
-        window.alert("썸네일이미지의 크기는 1.5MB를 초과할 수 없습니다.");
-      } else if (
-        imageData[0].type === "image/jpg" ||
-        imageData[0].type === "image/jpeg" ||
-        imageData[0].type === "image/png" ||
-        imageData[0].type === "application/pdf"
-      ) {
-        fileReader.readAsDataURL(imageData[0]);
+  //   if (imageData && imageData[0]) {
+  //     if (imageData[0].size > 1.5 * 1024 * 1024) {
+  //       //base64 encoding 시 사이즈 33% 증가로 인함
+  //       window.alert("썸네일이미지의 크기는 1.5MB를 초과할 수 없습니다.");
+  //     } else if (
+  //       imageData[0].type === "image/jpg" ||
+  //       imageData[0].type === "image/jpeg" ||
+  //       imageData[0].type === "image/png" ||
+  //       imageData[0].type === "application/pdf"
+  //     ) {
+  //       fileReader.readAsDataURL(imageData[0]);
 
-        fileReader.onload = () => {
-          setImage(fileReader.result);
-        };
-      } else {
-        window.alert("형식이 잘못되었습니다");
-      }
-      return;
-    }
-  };
+  //       fileReader.onload = () => {
+  //         setImage(fileReader.result);
+  //       };
+  //     } else {
+  //       window.alert("형식이 잘못되었습니다");
+  //     }
+  //     return;
+  //   }
+  // };
   return (
     <div className="flex flex-col justify-center px-6 lg:px-8 h-[100vh]">
       <div className="mx-auto w-full max-w-sm">
-        <div className="text-center text-2xl font-semibold">Gather Pets</div>
+        <div className="text-center text-2xl font-semibold">회원가입 페이지</div>
       </div>
       <div className="mx-auto w-full max-w-sm flex flex-col gap-3">
-        <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-xl space-y-6">
+        <div className="flex flex-col items-center justify-center p-6 bg-white rounded-lg space-y-6">
           <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-200 shadow-lg">
             <Image
               className="object-cover"
-              src={(image as string) || "/images/avatar.jpeg"}
+              src={"/images/avatar.jpeg"}
               alt="썸네일 이미지"
               width={80}
               height={80}
               priority // 로딩 우선순위 설정
             />
           </div>
-          {name ? <div>{name}</div> : null}
-          <button
+          {/* {name ? <div>{name}</div> : null} */}
+          {/* <button
             className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
             onClick={() => {
               if (imgRef.current) {
@@ -115,8 +115,8 @@ const RegisterPage = () => {
             onClick={() => setImage(null)}
           >
             썸네일 리셋
-          </button>
-          <input type="file" ref={imgRef} onChange={onChangeImage} accept="image/jpg, image/jpeg, image/png" hidden />
+          </button> */}
+          {/* <input type="file" ref={imgRef} onChange={onChangeImage} accept="image/jpg, image/jpeg, image/png" hidden /> */}
         </div>
         <input
           type="name"
