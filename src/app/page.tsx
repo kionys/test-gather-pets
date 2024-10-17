@@ -1,4 +1,3 @@
-
 import { Posts } from "@/components/templates/posts";
 import dynamic from "next/dynamic";
 

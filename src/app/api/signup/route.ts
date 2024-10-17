@@ -4,7 +4,7 @@ import prisma from "../../../../db";
 interface RequestBody {
   name: string;
   email: string;
-  image?: string;
+  image?: string | null;
   password: string;
 }
 
