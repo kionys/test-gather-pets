@@ -26,7 +26,7 @@ export const PostForm = ({ mutate }: { mutate: () => Promise<QueryObserverResult
   const [postData, setPostData] = useState<IPostForm>({
     title: "",
     content: "",
-    image: "" || null,
+    image: "",
     imageFile: null,
     hashtag: "",
     hashtags: [],
@@ -82,7 +82,7 @@ export const PostForm = ({ mutate }: { mutate: () => Promise<QueryObserverResult
           },
         });
 
-        setPostData({ title: "", content: "", image: "" || null, imageFile: null, hashtag: "", hashtags: [] });
+        setPostData({ title: "", content: "", image: "", imageFile: null, hashtag: "", hashtags: [] });
         mutate();
       } catch (e) {
         throw e;
