@@ -1,18 +1,21 @@
-import { Posts } from "@/components/templates/posts";
-import dynamic from "next/dynamic";
+"use client";
 
-// 동적 임포트
-const Sidebar = dynamic(() => import("@/components/templates/sidebar"), {
-  ssr: false, // 서버 사이드 렌더링 비활성화
-});
+import { useSession } from "next-auth/react";
+import { lazy } from "react";
+
+const Sidenav = lazy(() => import("@/components/templates/sidenav"));
+const Posts = lazy(() => import("@/components/templates/posts"));
 
 export default function Home() {
-  return (
-    <>
-      <div className="sm:flex w-full overflow-hidden sm:overflow-auto">
-        <Sidebar />
+  const { status } = useSession();
+
+  if (status === "loading") return <>loading ...</>;
+  if (status !== "authenticated") return <>not authenticated</>;
+  if (status === "authenticated")
+    return (
+      <div className="sm:flex w-full h-screen overflow-hidden sm:overflow-auto">
+        <Sidenav />
         <Posts />
       </div>
-    </>
-  );
+    );
 }
