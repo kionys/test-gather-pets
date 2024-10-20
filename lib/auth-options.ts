@@ -9,9 +9,11 @@ import prisma from "../db";
 
 // https://velog.io/@yejine2/Next.js-App-Router%EC%97%90%EC%84%9C-authOptions-%EA%B4%80%EB%A0%A8-%EC%97%90%EB%9F%AC-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0
 export const authOptions: AuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET, // jwt 암호화 서명
   session: {
     strategy: "jwt", // jwt 기반의 session을 사용
     maxAge: 60 * 60 * 24, // 24시간으로 설정
+    // maxAge: 1, // 1분으로 설정 후 테스트 진행
     updateAge: 60 * 60 * 2, // session 업데이트 주기, 2시간으로 설정
   },
   adapter: PrismaAdapter(prisma) as Adapter,
@@ -78,7 +80,7 @@ export const authOptions: AuthOptions = {
     //   }
     //   return token;
     // },
-    jwt: async ({ user, token, account }) => {
+    jwt: async ({ user, token, trigger, account, session }) => {
       if (user && account) {
         await prisma.user.update({
           where: { id: parseInt(user.id) },
@@ -87,6 +89,15 @@ export const authOptions: AuthOptions = {
 
         token.sub = user.id;
       }
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      }
+
+      if (trigger === "update" && session?.image) {
+        token.picture = session.image;
+      }
+      // console.log("세션 데이터:", session);
+      // console.log("업데이트된 토큰:", token);
       return token;
     },
   },
