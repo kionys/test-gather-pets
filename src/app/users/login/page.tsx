@@ -1,57 +1,58 @@
 "use client";
+import { checkEmail, checkPassword } from "@/core/utils/validation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
+
+interface IStateLoginData {
+  email: string;
+  password: string;
+}
 
 /**
  * 로그인 페이지
  * @author 김기원
  */
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const { status } = useSession();
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [loginData, setLoginData] = useState<IStateLoginData>({
+    email: "",
+    password: "",
+  });
 
-  // 로그인
-  const signInUser = async () => {
-    // 이메일 형식 유효성 검사
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      console.error("유효하지 않은 이메일 형식입니다.");
-      return;
+  useEffect(() => {
+    if (loginData.email && loginData.password) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
     }
+  }, [loginData]);
 
-    // 비밀번호 조합 조건 검사 (최소 8자리, 특수문자 포함)
-    const passwordRegex = /^(?=.*[!@#$%^&*])(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$/;
-    if (!passwordRegex.test(password)) {
-      console.error("비밀번호는 최소 8자리 이상이어야 하며, 특수문자와 숫자를 포함해야 합니다.");
-      return;
+  const onClickLogin = async () => {
+    const isPassEmail = checkEmail(loginData.email);
+    const isPassPassword = checkPassword(loginData.password);
+
+    if (isPassEmail && isPassPassword) {
+      try {
+        await signIn("credentials", {
+          email: loginData.email,
+          password: loginData.password,
+          redirect: true,
+          callbackUrl: "/",
+        });
+      } catch (e) {
+        throw e;
+      }
     }
-
-    // 유효성 검사를 통과한 경우 로그인 시도
-    const result = await signIn("credentials", {
-      email: email,
-      password: password,
-      redirect: true,
-      callbackUrl: "/",
-    })
-      .then(() => {
-        console.log("로그인이 완료되었습니다.");
-      })
-      .catch(err => {
-        console.error("로그인 실패:", err);
-        // if()
-        window.alert(err.status);
-      });
-    console.log(result);
   };
 
-  // useEffect(() => {
-  //   status === "authenticated" && router.replace("/");
-  // }, [router, status]);
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setLoginData({ ...loginData, [name]: value });
+  };
 
   return (
     <div className="flex flex-col justify-center px-6 lg:px-8 h-[100vh]">
@@ -61,22 +62,24 @@ const LoginPage = () => {
       <div className="mt-10 mx-auto w-full max-w-sm flex flex-col gap-3">
         <input
           type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          name="email"
+          value={loginData.email}
+          onChange={onChangeInput}
           placeholder="이메일"
           className="border border-gray-300 rounded-xl px-4 py-3"
         />
         <input
           type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
+          name="password"
+          value={loginData.password}
+          onChange={onChangeInput}
           placeholder="비밀번호"
           className="border border-gray-300 rounded-xl px-4 py-3"
         />
         <button
-          onClick={signInUser}
+          onClick={onClickLogin}
           className="text-white flex gap-2 bg-[#cdcdcd] hover:bg-[#cdcdcd]/90 font-medium rounded-lg w-full px-5 py-4 text-center items-center justify-center disabled:opacity-30"
-          disabled={!email || !password}
+          disabled={disabled}
         >
           로그인
         </button>
