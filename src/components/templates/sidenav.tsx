@@ -13,7 +13,7 @@ const Sidenav = () => {
 
   return (
     <div
-      className={`hidden sm:flex flex-col items-center bg-gray-200 h-screen p-5 pt-8 rounded-r-2xl ${
+      className={`hidden lg:flex flex-col items-center bg-gray-200 h-screen p-5 pt-8 rounded-r-2xl z-50 ${
         open ? "w-72 flex-shrink-0" : "w-10"
       } duration-300 sticky top-0 left-0`}
     >
@@ -28,7 +28,7 @@ const Sidenav = () => {
         <>
           {/* 프로필 */}
           <div className="mt-16">
-            <Avatar src={session?.user?.image} className="w-28 h-28" />
+            <Avatar src={session?.user?.image} isActive className="w-28 h-28" />
           </div>
 
           {/* 내 정보 */}
