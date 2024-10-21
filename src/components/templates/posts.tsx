@@ -6,7 +6,8 @@ import { IPost } from "@/types/post";
 import { Fragment, useCallback, useEffect, useRef } from "react";
 import Masonry from "react-masonry-css";
 import PostCard from "./post-card";
-import { PostForm } from "./post-form";
+import Stories from "./stories";
+import SubHeader from "./sub-header";
 
 const masornyConfig = {
   default: 3, // 기본값: 4 열
@@ -40,13 +41,18 @@ const Posts = ({ userId }: { userId?: number }) => {
   }, [fetchNext, isPageEnd, hasNextPage]);
 
   return (
-    <div className="py-4 md:p-4 bg-gray-50 rounded-2xl my-3 w-screen">
-      <PostForm mutate={mutate} />
+    <div className="py-4 rounded-2xl my-3 w-full">
+      {/* <PostForm mutate={mutate} /> */}
+      <SubHeader />
+
+      {/* 스토리 */}
+      <Stories />
+
       {!isLoading && !isError ? (
         posts?.pages?.map((page, i) => {
           return (
             <Fragment key={i}>
-              <Masonry className="flex" columnClassName="bg-gray-50" breakpointCols={masornyConfig}>
+              <Masonry className="flex" columnClassName="bg-white" breakpointCols={masornyConfig}>
                 {page.data.map((post: IPost, j: number) => {
                   return <PostCard key={j} post={post} isLoading={isLoading} />;
                 })}
