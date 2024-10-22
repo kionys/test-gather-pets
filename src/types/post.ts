@@ -12,5 +12,7 @@ export interface IPost {
     id: number;
     image?: string | null;
     name: string;
+    email: string;
+    authType?: string;
   };
 }

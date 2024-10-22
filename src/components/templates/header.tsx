@@ -1,4 +1,6 @@
-import useScroll from "@/core/custom-hook/use-scroll";
+"use client";
+
+import useScroll from "../../core/custom-hook/use-scroll";
 
 export const Header = () => {
   const { isScrollingUp } = useScroll();

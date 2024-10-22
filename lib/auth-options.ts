@@ -64,7 +64,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/users/login", // signIn 함수를 실행하면 /users/login로 리다이렉트 시킨다.
+    signIn: "/login", // signIn 함수를 실행하면 /users/login로 리다이렉트 시킨다.
   },
   callbacks: {
     session: ({ session, token }) => ({

@@ -59,6 +59,8 @@ export async function GET(request: Request) {
               id: true,
               image: true,
               name: true,
+              email: true,
+              authType: true,
             },
           },
         },

@@ -1,6 +1,6 @@
-import "@/components/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "../components/styles/globals.css";
 import { NextLayout, NextProvider } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -12,14 +12,20 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
         <NextProvider>
-          <NextLayout>{children}</NextLayout>
+          <NextLayout>
+            {children}
+            {modal}
+            <div id="modal-root" />
+          </NextLayout>
         </NextProvider>
       </body>
     </html>

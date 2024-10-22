@@ -13,12 +13,12 @@ const Sidenav = () => {
 
   return (
     <div
-      className={`hidden lg:flex flex-col items-center bg-gray-200 h-screen p-5 pt-8 rounded-r-2xl z-50 ${
-        open ? "w-72 flex-shrink-0" : "w-10"
+      className={`hidden sm:flex flex-col  items-center bg-gray-200 h-screen p-5 pt-8 rounded-r-2xl z-50 ${
+        open ? "w-16 xl:w-72 flex-shrink-0" : "w-16"
       } duration-300 sticky top-0 left-0`}
     >
       <div
-        className="w-10 h-14 flex items-center justify-center rounded-xl absolute -right-6 top-9 bg-gray-200 cursor-pointer"
+        className="hidden xl:flex w-10 h-14 items-center justify-center rounded-xl absolute -right-6 top-9 bg-gray-200 cursor-pointer"
         onClick={() => setOpen(!open)}
       >
         {open ? <FaArrowLeft className="h-4 text-gray-500" /> : <FaArrowRight className="h-4 text-gray-500" />}
@@ -27,68 +27,66 @@ const Sidenav = () => {
       {open && (
         <>
           {/* 프로필 */}
-          <div className="mt-16">
+          <div className="mt-16 hidden xl:flex">
             <Avatar src={session?.user?.image} isActive className="w-28 h-28" />
           </div>
 
           {/* 내 정보 */}
-          <div className="mt-5 flex flex-col w-full items-center justify-center">
-            <div className="font-semibold text-xl">
-              {session?.user.name}({session?.user.id})
-            </div>
+          <div className="mt-5 hidden xl:flex flex-col w-full items-center justify-center">
+            <div className="font-semibold text-xl">{session?.user.name}</div>
             <div className="text-gray-400">{session?.user.email}</div>
           </div>
 
           {/* 게시글, 팔로워, 팔로잉 */}
-          <div className="mt-10 flex items-center justify-center text-sm">
+          <div className="mt-10 hidden xl:flex items-center justify-center text-sm">
             <div className="flex flex-col gap-1 items-center justify-center cursor-pointer hover:opacity-60">
               <p className="font-medium text-lg text-gray-800">126</p>
               <p className="text-gray-400 text-sm">게시글</p>
             </div>
-            <Divider />
-            <div className="flex flex-col gap-1 items-center justify-center cursor-pointer hover:opacity-60">
+            <DividerY />
+            <div className="hidden xl:flex flex-col gap-1 items-center justify-center cursor-pointer hover:opacity-60">
               <p className="font-medium text-lg text-gray-800">1.8k</p>
               <p className="text-gray-400 text-sm">팔로워</p>
             </div>
-            <Divider />
-            <div className="flex flex-col gap-1 items-center justify-center cursor-pointer hover:opacity-60">
+            <DividerY />
+            <div className="hidden xl:flex flex-col gap-1 items-center justify-center cursor-pointer hover:opacity-60">
               <p className="font-medium text-lg text-gray-800">558</p>
               <p className="text-gray-400 text-sm">팔로잉</p>
             </div>
           </div>
 
           {/* 메뉴 */}
-          <div className="mt-10 flex flex-col gap-3 w-full">
+          <div className="hidden xl:flex mt-10 flex-col gap-3 w-full">
             <Link href="/" className="px-4 py-3 hover:bg-gray-300 rounded-md w-full text-md flex items-center gap-3">
               <FiBox />
-              <p>홈</p>
+              <p>Home</p>
             </Link>
             <Link href="/" className="px-4 py-3 hover:bg-gray-300 rounded-md w-full text-md flex items-center gap-3">
               <FiBox />
-              <p>피드</p>
+              <p>Feed</p>
             </Link>
             <Link href="/" className="px-4 py-3 hover:bg-gray-300 rounded-md w-full text-md flex items-center gap-3">
               <FiBox />
-              <p>알림</p>
+              <p>Notifications</p>
             </Link>
             <Link
-              href="/users/mypage"
+              href="/mypage"
               className="px-4 py-3 hover:bg-gray-300 rounded-md w-full text-md flex items-center gap-3"
             >
               <FiBox />
-              <p>마이페이지</p>
+              <p>My Page</p>
             </Link>
             <DividerX />
             <Link href="/" className="px-4 py-3 hover:bg-gray-300 rounded-md w-full text-md flex items-center gap-3">
               <FiBox />
-              <p>설정</p>
+              <p>Settings</p>
             </Link>
             <button
               className="px-4 py-3 hover:bg-gray-300 rounded-md w-full text-md flex items-center gap-3"
               onClick={() => signOut()}
             >
               <FiBox />
-              <p>로그아웃</p>
+              <p>Logout</p>
             </button>
           </div>
         </>
@@ -98,7 +96,7 @@ const Sidenav = () => {
 };
 export default Sidenav;
 
-const Divider = () => {
+const DividerY = () => {
   return (
     <div
       className="w-[54px] h-0 border-t-[0.5px] border-transparent border-gray-500"
@@ -109,7 +107,7 @@ const Divider = () => {
 const DividerX = () => {
   return (
     <div
-      className="w-[full] h-0 border-t-[0.5px] border-transparent border-gray-500"
+      className="w-[full] h-0 border-t-[0.5px] border-transparent border-gray-600"
       style={{ transform: "rotate(0deg)", gap: "0px" }}
     ></div>
   );

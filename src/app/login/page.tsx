@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiNaver } from "react-icons/si";
-import { checkEmail, checkPassword } from "../../../core/utils/validation";
+import { checkEmail, checkPassword } from "../../core/utils/validation";
 
 interface IStateLoginData {
   email: string;

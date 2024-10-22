@@ -14,3 +14,10 @@
 /* .layout {
   
 } */
+html {
+  overflow: hidden;
+}
+.swiper-slide .swiper-slide-active {
+  width: 59.25px;
+  margin-right: 0px;
+}

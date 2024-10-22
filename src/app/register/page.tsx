@@ -3,7 +3,7 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { checkEmail, checkPassword } from "../../../core/utils/validation";
+import { checkEmail, checkPassword } from "../../core/utils/validation";
 
 interface IStateRegisterData {
   name: string;
